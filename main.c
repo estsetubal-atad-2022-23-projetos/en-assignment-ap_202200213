@@ -10,6 +10,8 @@
 #include "list.h"
 #include "map.h"
 
+#include "utils.h"
+
 /**
  * @brief Prints the command menu.
  */

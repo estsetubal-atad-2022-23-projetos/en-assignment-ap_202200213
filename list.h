@@ -18,6 +18,7 @@
 #define LIST_INVALID_RANK	5
 
 #include "listElem.h"
+#include "utils.h"
 #include <stdbool.h>
 
 /** Forward declaration of the data structure. */
