@@ -19,10 +19,10 @@
 #include <stdbool.h>
 
 /** Key type definition. Change according to the use-case. */
-typedef int MapKey;
+typedef char[3] MapKey;
 
 /** Value type definition. Change according to the use-case. */
-typedef int MapValue;
+typedef CountryStatistcs MapValue;
 
 /**
  * @brief Prints a key.

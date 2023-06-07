@@ -16,6 +16,7 @@
  * @brief Prints the command menu.
  */
 void printMenu();
+
 /**
  * @brief Waits for user to press a key.
  */
