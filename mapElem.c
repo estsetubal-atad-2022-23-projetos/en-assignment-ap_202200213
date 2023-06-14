@@ -19,6 +19,6 @@ void mapValuePrint(MapValue value) {
 	
 }
 
-bool mapKeyEquals(MapKey key1, MapKey key2) {	
-	return (key1 == key2); 
+bool mapKeyEquals(MapKey key1, MapKey key2) {
+	return (strcmp(key1.text,key2.text) == 0);
 }

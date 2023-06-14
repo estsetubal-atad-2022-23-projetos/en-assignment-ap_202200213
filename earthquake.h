@@ -1,39 +1,24 @@
 #pragma once
-
-#define DATA_OK             0
-#define DATA_ERROR          1
-#define DATA_FULL           2
-#define FILE_NULL           3
-
+#include "date.h"
+#include "time.h"
 
 /**
  * @brief 
  * 
  */
-struct date;
 
-/**
- * @brief 
- * 
- */
-struct time;
+typedef struct earthquake {
+    int id;
+    // Código de 2 letras do país ou território mais próximo (countryLocation)
+    char countryCode[3]; // Calculado a partir das localizações durante importação
+    Date date;
+    Time time;
+    float latitude;
+    float longitude;
+    char type[20]; // Earthquake | Explosion | Nuclear Explosion | Rock Burst
+    float depth;
+    float magnitude;
+    char magnitudeType[3]; // MB | MD | MH | ML | MS | MW
+} Earthquake;
 
-/**
- * @brief 
- * 
- */
-struct earthquake;
-
-/**
- * @brief 
- * 
- */
-struct countryStatistics;
-
-/**
- * @brief 
- * 
- */
-struct countryLocation;
-
-int loadCL(CountryLocation arr[], int max);
+typedef Earthquake* PtEarthquake;

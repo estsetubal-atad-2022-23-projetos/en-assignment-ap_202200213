@@ -17,12 +17,14 @@
 #pragma once
 
 #include <stdbool.h>
+#include "stringWrap.h"
+#include "countryStatistics.h"
 
 /** Key type definition. Change according to the use-case. */
-typedef char[3] MapKey;
+typedef StringWrap MapKey;
 
 /** Value type definition. Change according to the use-case. */
-typedef CountryStatistcs MapValue;
+typedef CountryStatistics MapValue;
 
 /**
  * @brief Prints a key.
