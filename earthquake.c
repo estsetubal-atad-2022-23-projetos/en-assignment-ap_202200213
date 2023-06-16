@@ -1,9 +1,4 @@
-#include <stdio.h>
-#include "earthquake.h"
-#include "date.h"
-#include "time.h"
-#include "countryStatistics.h"
-#include "countryLocation.h"
+#include "utils.h"
 
 /*
 int loadEA(Earthquake arr[], int max) {

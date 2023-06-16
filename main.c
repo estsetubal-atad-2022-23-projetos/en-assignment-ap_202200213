@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <strings.h> 
 #include <stdbool.h>
 
 #include "stringWrap.h"
@@ -32,7 +31,7 @@ int main() {
 	// TODO: variables ?
 
 	/* Command interpreter. */
-	char command[100];	
+	/*char command[100];	
 	while (true) {
 		
 		printMenu();
@@ -61,6 +60,21 @@ int main() {
 	}
 
 	// TODO: Any memory cleanup before end of program?
+	*/
+
+	CountryLocation *ptCountryLocation = NULL;
+	int count;
+	loadCL(&ptCountryLocation, 244, &count);
+
+	for(int i = 0; i < count; i++) {
+        printf("ID:%d\n",count+1);
+        printf("\tCode:%s\n",ptCountryLocation[i].code);
+        printf("\tCode:%f\n",ptCountryLocation[i].latitude);
+        printf("\tCode:%f\n",ptCountryLocation[i].longitude);
+        printf("\tCode:%s\n",ptCountryLocation[i].territoryName);
+        printf("\tCode:%s\n",ptCountryLocation[i].countryName);
+        printf("\tCode:%s\n",ptCountryLocation[i].territoryRegion);
+    }
 
 	return EXIT_SUCCESS;
 }

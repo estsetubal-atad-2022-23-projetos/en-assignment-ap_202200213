@@ -2,6 +2,7 @@
     "files.associations": {
         "countrylocation.h": "c",
         "date.h": "c",
-        "listelem.h": "c"
+        "listelem.h": "c",
+        "stdio.h": "c"
     }
 }

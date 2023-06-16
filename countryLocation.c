@@ -1,38 +1,39 @@
 
-#include <stdio.h>
-#include "countryLocation.h"
+#include "utils.h"
 
-int loadCL(CountryLocation *arr, int max) {
+int loadCL(PtCountryLocation *ptCountryLocation, int max, int *size) {
     FILE* stream = fopen("./dataset/world_country_locations.csv", "r");
     if(stream == NULL || max < 0) return -1;
 
-    CountryLocation *ptCountryLocation = (CountryLocation*)malloc(max * sizeof(CountryLocation));
+    *ptCountryLocation = (PtCountryLocation)malloc(max * sizeof(CountryLocation));
 
     int count = 0;
+    int lineNumber = 0;
     char line[128];
     while (fgets(line, 128, stream))
     {
-        if(count == max) break;
-
-        CountryLocation countryLocation;
+        if (count == max) break;
+        if (lineNumber++ == 0) continue;
 
         char *tmp = strdup(line);
         char **tokens = splitString(tmp, 6, ";");
-        free(tmp);
 
-        strcpy(countryLocation.code,tokens[0]);
+        CountryLocation countryLocation;
+
+        strcpy(countryLocation.code, tokens[0]);
         countryLocation.latitude = atof(tokens[1]);
         countryLocation.longitude = atof(tokens[2]);
         strcpy(countryLocation.territoryName, tokens[3]);
         strcpy(countryLocation.countryName, tokens[4]);
-        strcpy(countryLocation.territoryRegion, tokens[5]);     
+        strcpy(countryLocation.territoryRegion, tokens[5]);
 
-        ptCountryLocation[count++] = countryLocation;
+        (*ptCountryLocation)[count++] = countryLocation;
 
 	    free(tokens);
+        free(tmp);
     }
-
     fclose(stream);
+    *size = count;
 
     return count;
 }
