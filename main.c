@@ -75,6 +75,7 @@ int main() {
         printf("\tCode:%s\n",ptCountryLocation[i].countryName);
         printf("\tCode:%s\n",ptCountryLocation[i].territoryRegion);
     }
+	free(&ptCountryLocation);
 
 	return EXIT_SUCCESS;
 }
