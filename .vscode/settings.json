@@ -3,6 +3,9 @@
         "countrylocation.h": "c",
         "date.h": "c",
         "listelem.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "stringwrap.h": "c",
+        "utils.h": "c",
+        "countrystatistics.h": "c"
     }
 }

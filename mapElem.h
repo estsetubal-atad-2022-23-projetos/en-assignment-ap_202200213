@@ -8,7 +8,7 @@
  * The MapValue is an alias to the type of values 
  * held by an instance of the ADT Map (PtMap).
  *  
- * These aliases just be changed according to the use-case.
+ * These aliases must be changed according to the use-case.
  * 
  * @author Bruno Silva (brunomnsilva@gmail.com)
  * @bug No known bugs.
@@ -17,6 +17,7 @@
 #pragma once
 
 #include <stdbool.h>
+#include <string.h> 
 #include "stringWrap.h"
 #include "countryStatistics.h"
 
@@ -29,7 +30,7 @@ typedef CountryStatistics MapValue;
 /**
  * @brief Prints a key.
  * 
- * Must be implemented according concrete
+ * Must be implemented according to the concrete
  * type of MapKey.
  * 
  * @param key [in] key to print
@@ -39,7 +40,7 @@ void mapKeyPrint(MapKey key);
 /**
  * @brief Prints a value.
  * 
- * Must be implemented according concrete
+ * Must be implemented according to the concrete
  * type of MapValue.
  * 
  * @param value [in] value to print
@@ -47,14 +48,16 @@ void mapKeyPrint(MapKey key);
 void mapValuePrint(MapValue value);
 
 /**
- * @brief Compares two keys for equality.
+ * @brief Compares two keys.
  * 
- * This function is used by the ADT Map to perform
- * a key-based access to the underlying data.
+ * This function provides the comparison criteria
+ * between two keys.
  * 
  * @param key1 [in] a key
  * @param key2 [in] another key
- * @return 'true' if keys match, or
- * @return 'false' if keys don't match. 
+ * @return 0 if they are equal.
+ * @return value less than 0, if 'key1' is less than 'key2' 
+ * @return value greater than 0 if 'key1' is greater than 'key2' 
  */
-bool mapKeyEquals(MapKey key1, MapKey key2);
+int mapKeyCompare(MapKey key1, MapKey key2);
+

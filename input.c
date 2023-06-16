@@ -22,9 +22,9 @@
 
 #include "input.h"
 
-static bool validIntegerFormat(const char* s);
+/*static bool validIntegerFormat(const char* s);
 static bool validDoubleFormat(const char* s);
-static void removeNewline(char *s);
+static void removeNewline(char *s);*/
 
 bool readInteger(int *ptVal) {
 	char str[20];
@@ -92,7 +92,7 @@ char** splitString(char *string, int nTokens, const char *delim) {
 }
 
 
-static bool validIntegerFormat(const char* s) {
+bool validIntegerFormat(const char* s) {
 	const char *start = s;
 	for(const char *c = s; *c != '\0'; c++) {
 		if(c == start && *c == '-') continue;
@@ -101,7 +101,7 @@ static bool validIntegerFormat(const char* s) {
 	return true;
 }
 
-static bool validDoubleFormat(const char* s) {
+bool validDoubleFormat(const char* s) {
 	int dotCount = 0;
 	const char *start = s;
 	for(const char *c = s; *c != '\0'; c++) {
@@ -116,7 +116,7 @@ static bool validDoubleFormat(const char* s) {
 	return true;
 }
 
-static void removeNewline(char *s) {
+void removeNewline(char *s) {
 	int len = strlen(s);
 	if (len > 0 && s[len - 1] == '\n') {
 		s[len - 1] = '\0';

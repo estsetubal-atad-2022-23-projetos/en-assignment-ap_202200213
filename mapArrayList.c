@@ -12,6 +12,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#define INITIAL_CAPACITY 20
+
 typedef struct keyValue {
 	MapKey key;
 	MapValue value;
@@ -37,7 +39,7 @@ static int findIndexOfKey(PtMap map, MapKey key) {
 	if (map == NULL) return -1;
 
 	for (int i = 0; i < map->size; i++) {
-		if (mapKeyEquals(map->elements[i].key, key)) {
+		if (mapKeyCompare(map->elements[i].key, key) == 0) {
 			return i;
 		}
 	}
@@ -59,18 +61,18 @@ static bool ensureCapacity(PtMap map) {
 	return true;
 }
 
-PtMap mapCreate(unsigned int initialCapacity) {
+PtMap mapCreate() {
 	PtMap newMap = (PtMap)malloc(sizeof(MapImpl));
 	if (newMap == NULL) return NULL;
 
-	newMap->elements = (KeyValue*)calloc(initialCapacity, sizeof(KeyValue));
+	newMap->elements = (KeyValue*)calloc(INITIAL_CAPACITY, sizeof(KeyValue));
 	if (newMap->elements == NULL) {
 		free(newMap);
 		return NULL;
 	}
 
 	newMap->size = 0;
-	newMap->capacity = initialCapacity;
+	newMap->capacity = INITIAL_CAPACITY;
 
 	return newMap;
 }
@@ -97,7 +99,7 @@ int mapPut(PtMap map, MapKey key, MapValue value) {
 		return MAP_OK;
 	}
 	else {
-		if (!ensureCapacity(map)) return MAP_FULL;
+		if (!ensureCapacity(map)) return MAP_NO_MEMORY;
 		
 		map->elements[map->size].key = key;
 		map->elements[map->size].value = value;

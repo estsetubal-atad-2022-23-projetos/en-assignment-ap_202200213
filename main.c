@@ -1,14 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-
-#include "stringWrap.h"
-#include "input.h"
-
-#include "list.h"
-#include "map.h"
-
 #include "utils.h"
 
 /**
@@ -62,20 +51,32 @@ int main() {
 	// TODO: Any memory cleanup before end of program?
 	*/
 
-	CountryLocation *ptCountryLocation = NULL;
-	int count;
-	loadCL(&ptCountryLocation, 244, &count);
+	PtMap ptMap = NULL;
+	loadST(&ptMap, 230);
+	printf("%p", ptMap);
 
-	for(int i = 0; i < count; i++) {
-        printf("ID:%d\n",count+1);
-        printf("\tCode:%s\n",ptCountryLocation[i].code);
-        printf("\tCode:%f\n",ptCountryLocation[i].latitude);
-        printf("\tCode:%f\n",ptCountryLocation[i].longitude);
-        printf("\tCode:%s\n",ptCountryLocation[i].territoryName);
-        printf("\tCode:%s\n",ptCountryLocation[i].countryName);
-        printf("\tCode:%s\n",ptCountryLocation[i].territoryRegion);
-    }
-	free(&ptCountryLocation);
+
+	int size;
+	mapSize(ptMap, &size);
+
+	MapKey *ptMapKeys = mapKeys(ptMap);
+	for(int i = 0; i < size; i++) {
+
+		CountryStatistics countryStatistics;
+		mapGet(ptMap, ptMapKeys[i], &countryStatistics);
+		printf("%s\n",ptMapKeys[i].text);
+		printf("\t%s\n",countryStatistics.code);
+		printf("\t%s\n",countryStatistics.name);
+		printf("\t%s\n",countryStatistics.region);
+		printf("\t%ld\n",countryStatistics.population);
+		printf("\t%ld\n",countryStatistics.area);
+		printf("\t%ld\n",countryStatistics.gdp_capita);
+		printf("\t%f\n",countryStatistics.literacy);
+		printf("\t%f\n",countryStatistics.birthrate);
+		printf("\t%f\n",countryStatistics.deathrate);
+	}
+	free(ptMapKeys);
+	free(ptMap);
 
 	return EXIT_SUCCESS;
 }

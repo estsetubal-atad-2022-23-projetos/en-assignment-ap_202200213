@@ -6,9 +6,7 @@
 #include <string.h>
 #include "input.h"
 #include "list.h"
-#include "listElem.h"
 #include "map.h"
-#include "mapElem.h"
 #include "stringWrap.h"
 #include "countryLocation.h"
 #include "countryStatistics.h"
@@ -16,9 +14,13 @@
 #include "date.h"
 #include "time.h"
 
+#define UTILS_OPERATION_OK 0
+#define UTILS_PARAMETER_INVALID 1
+#define UTILS_FILE_NOT_FOUND 2
+#define UTILS_NO_MEMORY 3
 
 int loadCL(PtCountryLocation *ptCountryLocation, int max, int *size);
 
-int loadEA(PtList *ptList, int max);
+int loadST(PtMap *PtMap, int max);
 
-//int splitString(char *string, char delimiter, char *tokens[]);
+int loadEA(PtList *ptList, int max);

@@ -73,3 +73,8 @@ void readString(char *charArr, unsigned int maxChars);
  */
 char** splitString(char *string, int nTokens, const char *delim);
 
+bool validIntegerFormat(const char* s);
+
+bool validDoubleFormat(const char* s);
+
+void removeNewline(char *s);
