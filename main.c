@@ -43,7 +43,7 @@ int main() {
 				printf("%d countries were read. ", countryLocationSize);
 			}
 			else {
-				printf("Country location data already loaded.");
+				printf("Country location data already loaded. ");
 			}
 
 			if (ptMapCountryStatistics == NULL) {
@@ -53,7 +53,7 @@ int main() {
 				printf("%d country statistics were read. ", size);
 			}
 			else {
-				printf("Country statistics data already loaded.");
+				printf("Country statistics data already loaded. ");
 			}
 
 			if (ptListEarthquake == NULL) {
@@ -111,22 +111,34 @@ int main() {
 			if (ptListEarthquake != NULL) {
 				int size;
 				listSize(ptListEarthquake, &size);
+				printf("%d entries loaded.", size);
+
 				int pageCount = ceil(size/50.0f);
 
-				char pageCommand[16];	
+				int number = 0;
+				char pageCommand[16];
 				while (true) {
-					printf("\nEnter 'back' to return or desired page number out of %d: ", pageCount);
+					printf("\n\nEnter 'back' to return, 'next' or press enter for next page, 'prev' for previous page or desired page number out of %d: ", pageCount);
 					readString(pageCommand, 16);
 
-					int number;
-					if (validIntegerFormat(pageCommand)) number = atoi(pageCommand);
+					if(strcasecmp(pageCommand, "") == 0 || strcasecmp(pageCommand, "next") == 0 || strcasecmp(pageCommand, "nt") == 0) {
+						if (number < 1) number = 1;
+						else if (number >= pageCount) number = pageCount;
+						else number++;
+					}
+					else if(strcasecmp(pageCommand, "previous") == 0 || strcasecmp(pageCommand, "prev") == 0 || strcasecmp(pageCommand, "pv") == 0) {
+						if (number > pageCount) number = pageCount;
+						else if (number <= 1) number = 1;
+						else number--;
+					}
+					else if (validIntegerFormat(pageCommand)) number = atoi(pageCommand);
 					else number = -1;
 
 					if (strcasecmp(pageCommand, "BACK") == 0) {
 						printf("\nReturning to main menu...");
 						break;
-					} 
-					else if (number == -1 || number <= 0 || number > pageCount) {
+					}
+					else if (number < 1 || number > pageCount) {
 						printf("\nInvalid number.");
 					} 
 					else {
@@ -141,7 +153,7 @@ int main() {
 						}
 					}
 
-					waitForKeypress();
+					//waitForKeypress();
 				}
 			}
 			else {
@@ -149,18 +161,38 @@ int main() {
 			}
 			
 		}
+		else if (strcasecmp(command, "CLEAR") == 0) {
+			if (ptCountryLocation != NULL) {
+				printf("%d records deleted from Country Locations. ", countryLocationSize);
+				countryLocationSize = 0;
+				free(ptCountryLocation);
+			}
+
+			if (ptListEarthquake != NULL) {
+				int size;
+				listSize(ptListEarthquake, &size);
+				printf("%d records deleted from Earthquakes. ", size);
+				listDestroy(&ptListEarthquake);
+			}
+
+			if (ptMapCountryStatistics != NULL) {
+				int size;
+				mapSize(ptMapCountryStatistics, &size);
+				printf("%d records deleted from Country Statistics.", size);
+				mapDestroy(&ptMapCountryStatistics);
+			}
+		}
 		else {
 			printf("Command not found.");
-
 		}
 
 		waitForKeypress();
 	}
 
 	//Cleanup
-	free(ptCountryLocation);
-	mapDestroy(&ptMapCountryStatistics);
 	listDestroy(&ptListEarthquake);
+	mapDestroy(&ptMapCountryStatistics);
+	free(ptCountryLocation);
 
 	return EXIT_SUCCESS;
 }
