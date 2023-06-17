@@ -15,8 +15,6 @@ void waitForKeypress();
  * @return int error code: EXIT_SUCCESS or EXIT_FAILURE
  */
 int main() {
-	/* Feel free to change whatever you want. */
-
 	int countryLocationMax = 244;
 	int countryLocationSize = 0;
 	PtCountryLocation ptCountryLocation = NULL;
