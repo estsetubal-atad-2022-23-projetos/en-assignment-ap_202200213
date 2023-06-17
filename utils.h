@@ -27,3 +27,4 @@ int loadST(PtMap *PtMap, int max);
 int loadEA(PtList *ptListRef, int max, PtCountryLocation ptCountryLocation, int countryLocationSize);
 
 float getDistance(float x0, float y0, float x1, float y1);
+

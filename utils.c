@@ -127,7 +127,7 @@ int loadEA(PtList *ptListRef, int max, PtCountryLocation ptCountryLocation, int 
         char *tmp = strdup(line);
         char **tokens = splitString(tmp, 9, ";");
 
-        char **dateTokens = splitString(tokens[1], 3, "/");
+        char **dateTokens = splitString(tokens[1], 4, "/");
         char **timeTokens = splitString(tokens[2], 3, ":");
 
         Date date;
@@ -186,3 +186,4 @@ int loadEA(PtList *ptListRef, int max, PtCountryLocation ptCountryLocation, int 
 float getDistance(float x0, float y0, float x1, float y1) {
     return sqrt(pow(x0-x1,2)+pow(y0-y1,2));
 }
+
