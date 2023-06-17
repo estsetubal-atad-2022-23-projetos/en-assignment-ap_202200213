@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <ctype.h>
 #include "input.h"
 #include "list.h"
 #include "map.h"
@@ -26,5 +27,10 @@ int loadST(PtMap *PtMap, int max);
 
 int loadEA(PtList *ptListRef, int max, PtCountryLocation ptCountryLocation, int countryLocationSize);
 
-float getDistance(float x0, float y0, float x1, float y1);
+void show_y(PtList ptListEarthquake, int year);
 
+void show_te(PtList ptListEarthquake, const char* countryCode);
+
+void show_yt(PtList ptListEarthquake, const char* countryCode, int year);
+
+float getDistance(float x0, float y0, float x1, float y1);

@@ -183,7 +183,112 @@ int loadEA(PtList *ptListRef, int max, PtCountryLocation ptCountryLocation, int 
     return UTILS_OPERATION_OK;
 }
 
+void show_y(PtList ptListEarthquake, int year) {
+    int count = 0;
+    int size;
+    listSize(ptListEarthquake, &size);
+
+    printf("\n======================================================= Earthquakes =======================================================");
+    printf("\n  ID  Country Code     Date       Time      Latitude  Longitude         Type          Depth    Magnitude  Magnitude Type  ");
+
+    for (int i = 0; i < size; i++) {
+        Earthquake earthquake;
+        listGet(ptListEarthquake, i, &earthquake);
+
+        int earthquakeYear = earthquake.date.year; // Extrai o ano da data
+
+        if (earthquakeYear == year) {
+            count++;
+            printf("\n");
+            listElemPrint(earthquake);
+        }
+    }
+
+    if (count == 0) {
+        printf("\nEarthquake data not available for year %d.", year);
+    } else {
+        printf("\n\n%d earthquake(s) found for year %d.", count, year);
+    }
+}
+
+void show_te(PtList ptListEarthquake, const char* countryCode) {
+    int count = 0;
+    int size;
+    listSize(ptListEarthquake, &size);
+
+    printf("\n======================================================= Earthquakes =======================================================");
+    printf("\n  ID  Country Code     Date       Time      Latitude  Longitude         Type          Depth    Magnitude  Magnitude Type  ");
+
+    // Converter o código de país/território para letras minúsculas para comparação sem distinção entre maiúsculas e minúsculas
+    char lowercaseCode[3];
+    lowercaseCode[0] = tolower(countryCode[0]);
+    lowercaseCode[1] = tolower(countryCode[1]);
+    lowercaseCode[2] = '\0';
+
+    for (int i = 0; i < size; i++) {
+        Earthquake earthquake;
+        listGet(ptListEarthquake, i, &earthquake);
+
+        // Converter o código de país/território do terremoto para letras minúsculas para comparação
+        char lowercaseEarthquakeCode[3];
+        lowercaseEarthquakeCode[0] = tolower(earthquake.countryCode[0]);
+        lowercaseEarthquakeCode[1] = tolower(earthquake.countryCode[1]);
+        lowercaseEarthquakeCode[2] = '\0';
+
+        if (strcmp(lowercaseEarthquakeCode, lowercaseCode) == 0) {
+            count++;
+            printf("\n");
+            listElemPrint(earthquake);
+        }
+    }
+
+    if (count == 0) {
+        printf("\nEarthquake data not available for %s.", countryCode);
+    } else {
+        printf("\n\n%d earthquake(s) found for %s.", count, countryCode);
+    }
+}
+
+void show_yt(PtList ptListEarthquake, const char* countryCode, int year) {
+    int count = 0;
+    int size;
+    listSize(ptListEarthquake, &size);
+
+    printf("\n======================================================= Earthquakes =======================================================");
+    printf("\n  ID  Country Code     Date       Time      Latitude  Longitude         Type          Depth    Magnitude  Magnitude Type  ");
+
+    // Converter o código de país/território para letras minúsculas para comparação sem distinção entre maiúsculas e minúsculas
+    char lowercaseCode[3];
+    lowercaseCode[0] = tolower(countryCode[0]);
+    lowercaseCode[1] = tolower(countryCode[1]);
+    lowercaseCode[2] = '\0';
+
+    for (int i = 0; i < size; i++) {
+        Earthquake earthquake;
+        listGet(ptListEarthquake, i, &earthquake);
+
+        // Converter o código de país/território do terremoto para letras minúsculas para comparação
+        char lowercaseEarthquakeCode[3];
+        lowercaseEarthquakeCode[0] = tolower(earthquake.countryCode[0]);
+        lowercaseEarthquakeCode[1] = tolower(earthquake.countryCode[1]);
+        lowercaseEarthquakeCode[2] = '\0';
+
+        int earthquakeYear = earthquake.date.year; // Extrair o ano da data
+
+        if (strcmp(lowercaseEarthquakeCode, lowercaseCode) == 0 && earthquakeYear == year) {
+            count++;
+            printf("\n");
+            listElemPrint(earthquake);
+        }
+    }
+
+    if (count == 0) {
+        printf("\nEarthquake data not available for country %s in year %d.", countryCode, year);
+    } else {
+        printf("\n\n%d earthquake(s) found for country %s in year %d.", count, countryCode, year);
+    }
+}
+
 float getDistance(float x0, float y0, float x1, float y1) {
     return sqrt(pow(x0-x1,2)+pow(y0-y1,2));
 }
-
