@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "input.h"
 #include "list.h"
 #include "map.h"
@@ -23,4 +24,6 @@ int loadCL(PtCountryLocation *ptCountryLocation, int max, int *size);
 
 int loadST(PtMap *PtMap, int max);
 
-int loadEA(PtList *ptList, int max);
+int loadEA(PtList *ptListRef, int max, PtCountryLocation ptCountryLocation, int countryLocationSize);
+
+float getDistance(float x0, float y0, float x1, float y1);

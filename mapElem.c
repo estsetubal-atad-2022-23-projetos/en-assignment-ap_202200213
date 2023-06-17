@@ -10,11 +10,20 @@
 #include <stdio.h>
 
 void mapKeyPrint(MapKey key) {
-	printf("%d \n", key);
+	printf("%s\n", key.text);
 }
 
 void mapValuePrint(MapValue value) {
-	printf("%d \n", value);
+	printf("\t%s\n",value.code);
+	printf("\t%s\n",value.name);
+	printf("\t%s\n",value.region);
+	printf("\t%ld\n",value.population);
+	printf("\t%ld\n",value.area);
+	printf("\t%ld\n",value.gdp_capita);
+	printf("\t%f\n",value.literacy);
+	printf("\t%f\n",value.birthrate);
+	printf("\t%f\n",value.deathrate);
+	
 }
 
 int mapKeyCompare(MapKey key1, MapKey key2) {

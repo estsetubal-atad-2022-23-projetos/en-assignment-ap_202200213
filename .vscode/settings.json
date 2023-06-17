@@ -6,6 +6,9 @@
         "stdio.h": "c",
         "stringwrap.h": "c",
         "utils.h": "c",
-        "countrystatistics.h": "c"
+        "countrystatistics.h": "c",
+        "type_traits": "c",
+        "xtr1common": "c",
+        "xutility": "c"
     }
 }
