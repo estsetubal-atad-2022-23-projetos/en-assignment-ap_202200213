@@ -20,11 +20,13 @@ int main() {
 	// TODO: variables ?
 
 	/* Command interpreter. */
-	/*char command[100];	
+	char command[100];	
 	while (true) {
 		
 		printMenu();
 		readString(command, 100);
+		char commandCopy[100];
+		strcpy(arguments, commandCopy);
 
 		if (strcasecmp(command, "QUIT") == 0) {
 			// Break loop, effectively leaving the command line	
@@ -49,8 +51,7 @@ int main() {
 	}
 
 	// TODO: Any memory cleanup before end of program?
-	*/
-	
+
 	return EXIT_SUCCESS;
 }
 
