@@ -14,16 +14,19 @@ void mapKeyPrint(MapKey key) {
 }
 
 void mapValuePrint(MapValue value) {
-	printf("\t%s\n",value.code);
-	printf("\t%s\n",value.name);
-	printf("\t%s\n",value.region);
-	printf("\t%ld\n",value.population);
-	printf("\t%ld\n",value.area);
-	printf("\t%ld\n",value.gdp_capita);
-	printf("\t%f\n",value.literacy);
-	printf("\t%f\n",value.birthrate);
-	printf("\t%f\n",value.deathrate);
-	
+	printf("\n%*s", 2, value.code);   
+	printf(" %*s", -32, value.name);
+	printf(" %*s", -20, value.region);
+	printf(" %*ld", 10, value.population);
+	printf(" %*ld", 8, value.area);
+	if(value.gdp_capita >= 0) printf(" %*ld", 5, value.gdp_capita);
+	else printf("    - ");
+	if(value.literacy >= 0) printf(" %*.2f", 6, value.literacy);
+	else printf("    -  ");
+	if(value.birthrate >= 0) printf(" %*.2f", 5, value.birthrate);
+	else printf("   -  ");
+	if(value.deathrate >= 0) printf(" %*.2f", 5, value.deathrate);
+	else printf("   -  ");
 }
 
 int mapKeyCompare(MapKey key1, MapKey key2) {

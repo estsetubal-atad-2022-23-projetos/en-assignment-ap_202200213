@@ -16,4 +16,4 @@ float birthrate; // Número de nascimentos por 1000 pessoas por ano. Contém val
 float deathrate; // Número de mortes por 1000 pessoas por ano. Contém valores N.A.
 } CountryStatistics;
 
-typedef CountryStatistics* PtCountryStatistcs;
+typedef CountryStatistics* PtCountryStatistics;

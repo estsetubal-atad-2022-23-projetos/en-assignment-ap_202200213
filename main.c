@@ -22,7 +22,7 @@ int main() {
 	int countryStatisticsMax = 230;
 	PtMap ptMapCountryStatistics = NULL;
 
-	int earthquakeMax = 23409;
+	int earthquakeMax = 2340;//23409;
 	PtList ptListEarthquake = NULL;
 
 
@@ -37,151 +37,23 @@ int main() {
 			// Break loop, effectively leaving the command line
 			break;	
 		}
-		else if (strcasecmp(command, "LOADALL") == 0) {
-			if (ptCountryLocation == NULL) {
-				loadCL(&ptCountryLocation, countryLocationMax, &countryLocationSize);
-				printf("%d countries were read. ", countryLocationSize);
-			}
-			else {
-				printf("Country location data already loaded. ");
-			}
-
-			if (ptMapCountryStatistics == NULL) {
-				loadST(&ptMapCountryStatistics, countryStatisticsMax);
-				int size;
-				mapSize(ptMapCountryStatistics, &size);
-				printf("%d country statistics were read. ", size);
-			}
-			else {
-				printf("Country statistics data already loaded. ");
-			}
-
-			if (ptListEarthquake == NULL) {
-				if(ptCountryLocation != NULL) {
-					loadEA(&ptListEarthquake, earthquakeMax, ptCountryLocation, countryLocationSize);
-					int size;
-					listSize(ptListEarthquake, &size);
-					printf("%d country statistics were read. ", size);
-				}
-				else {
-					printf("Country location data not loaded!");
-				}
-			}
-			else {
-				printf("Country statistics data already loaded.");
-			}
+		else if (strcasecmp(command, "LOADALL") == 0 || strcasecmp(command, "LOAD") == 0) {
+			cmdLoadCL(&ptCountryLocation, countryLocationMax, &countryLocationSize);
+			cmdLoadST(&ptMapCountryStatistics, countryStatisticsMax);
+			cmdLoadEA(&ptListEarthquake, earthquakeMax, ptCountryLocation, countryLocationSize);
 		}
-		else if (strcasecmp(command, "LOADCL") == 0) {
-			if (ptCountryLocation == NULL) {
-				loadCL(&ptCountryLocation, countryLocationMax, &countryLocationSize);
-				printf("%d countries were read.", countryLocationSize);
-			}
-			else {
-				printf("Country location data already loaded.");
-			}
-		}
-		else if (strcasecmp(command, "LOADST") == 0) {
-			if (ptMapCountryStatistics == NULL) {
-				loadST(&ptMapCountryStatistics, countryStatisticsMax);
-				int size;
-				mapSize(ptMapCountryStatistics, &size);
-				printf("%d country statistics were read.", size);
-			}
-			else {
-				printf("Country statistics data already loaded.");
-			}
-		}
-		else if (strcasecmp(command, "LOADEA") == 0) {
-			if (ptListEarthquake == NULL) {
-				if(ptCountryLocation != NULL) {
-					loadEA(&ptListEarthquake, earthquakeMax, ptCountryLocation, countryLocationSize);
-					int size;
-					listSize(ptListEarthquake, &size);
-					printf("%d country statistics were read.", size);
-				}
-				else {
-					printf("Country location data not loaded!");
-				}
-			}
-			else {
-				printf("Country statistics data already loaded.");
-			}
-		}
-		else if (strcasecmp(command, "SHOWALL") == 0) {
-			if (ptListEarthquake != NULL) {
-				int size;
-				listSize(ptListEarthquake, &size);
-				printf("%d entries loaded.", size);
-
-				int pageCount = ceil(size/50.0f);
-
-				int number = 0;
-				char pageCommand[16];
-				while (true) {
-					printf("\n\nEnter 'back' to return, 'next' or press enter for next page, 'prev' for previous page or desired page number out of %d: ", pageCount);
-					readString(pageCommand, 16);
-
-					if(strcasecmp(pageCommand, "") == 0 || strcasecmp(pageCommand, "next") == 0 || strcasecmp(pageCommand, "nt") == 0) {
-						if (number < 1) number = 1;
-						else if (number >= pageCount) number = pageCount;
-						else number++;
-					}
-					else if(strcasecmp(pageCommand, "previous") == 0 || strcasecmp(pageCommand, "prev") == 0 || strcasecmp(pageCommand, "pv") == 0) {
-						if (number > pageCount) number = pageCount;
-						else if (number <= 1) number = 1;
-						else number--;
-					}
-					else if (validIntegerFormat(pageCommand)) number = atoi(pageCommand);
-					else number = -1;
-
-					if (strcasecmp(pageCommand, "BACK") == 0) {
-						printf("\nReturning to main menu...");
-						break;
-					}
-					else if (number < 1 || number > pageCount) {
-						printf("\nInvalid number.");
-					} 
-					else {
-						printf("\nShowing page %d out of %d:", number, pageCount);
-						printf("\n======================================================= Earthquakes =======================================================");
-						printf("\n  ID  Country Code     Date       Time      Latitude  Longitude         Type          Depth    Magnitude  Magnitude Type  ");
-						for (int i = 50*(number-1); i < 50*(number) && i < size; i++) {
-							Earthquake earthquake;
-							listGet(ptListEarthquake, i, &earthquake);
-							printf("\n");
-							listElemPrint(earthquake);
-						}
-					}
-
-					//waitForKeypress();
-				}
-			}
-			else {
-				printf("Earthquake data not loaded!");
-			}
-			
-		}
-		else if (strcasecmp(command, "CLEAR") == 0) {
-			if (ptCountryLocation != NULL) {
-				printf("%d records deleted from Country Locations. ", countryLocationSize);
-				countryLocationSize = 0;
-				free(ptCountryLocation);
-			}
-
-			if (ptListEarthquake != NULL) {
-				int size;
-				listSize(ptListEarthquake, &size);
-				printf("%d records deleted from Earthquakes. ", size);
-				listDestroy(&ptListEarthquake);
-			}
-
-			if (ptMapCountryStatistics != NULL) {
-				int size;
-				mapSize(ptMapCountryStatistics, &size);
-				printf("%d records deleted from Country Statistics.", size);
-				mapDestroy(&ptMapCountryStatistics);
-			}
-		}
+		else if (strcasecmp(command, "LOADCL") == 0) { cmdLoadCL(&ptCountryLocation, countryLocationMax, &countryLocationSize); }
+		else if (strcasecmp(command, "LOADST") == 0) { cmdLoadST(&ptMapCountryStatistics, countryStatisticsMax); }
+		else if (strcasecmp(command, "LOADEA") == 0) { cmdLoadEA(&ptListEarthquake, earthquakeMax, ptCountryLocation, countryLocationSize); }
+		else if (strcasecmp(command, "SHOWALL") == 0) { cmdShowAll(ptListEarthquake); }
+		else if (strcasecmp(command, "CLEAR") == 0) { cmdClear(&ptListEarthquake, &ptMapCountryStatistics, &ptCountryLocation, &countryLocationSize); }
+		else if (strcasecmp(command, "SHOW_Y") == 0) { cmdShowY(ptListEarthquake); }
+		else if (strcasecmp(command, "SHOW_T") == 0) { cmdShowT(ptListEarthquake, ptCountryLocation, countryLocationSize); }
+		else if (strcasecmp(command, "SHOW_YT") == 0) { cmdShowYT(ptListEarthquake, ptCountryLocation, countryLocationSize); }
+		else if (strcasecmp(command, "LIST_T") == 0) { cmdListT(ptListEarthquake); }
+		else if (strcasecmp(command, "COUNT") == 0) { cmdCount(ptListEarthquake); }
+		else if (strcasecmp(command, "COUNTRY_S") == 0) { cmdCountryS(ptMapCountryStatistics); }
+		else if (strcasecmp(command, "REGION_AVG") == 0) { cmdRegionAvg(ptMapCountryStatistics); }
 		else {
 			printf("Command not found.");
 		}
@@ -190,10 +62,8 @@ int main() {
 	}
 
 	//Cleanup
-	listDestroy(&ptListEarthquake);
-	mapDestroy(&ptMapCountryStatistics);
-	free(ptCountryLocation);
-
+	cmdClear(&ptListEarthquake, &ptMapCountryStatistics, &ptCountryLocation, &countryLocationSize);
+	printf("\n");
 	return EXIT_SUCCESS;
 }
 

@@ -19,7 +19,7 @@
 
 
 typedef struct stringWrap {
-    char text[3];
+    char text[30];
     /* 
         Note: 100 characters should be enough, 
         but you can change it towards your needs.
