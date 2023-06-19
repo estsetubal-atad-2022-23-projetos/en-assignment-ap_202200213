@@ -865,14 +865,14 @@ void cmdHistogram(PtList ptListEarthquake) {
         printf("\nInvalid country code, must be 2 letters long");
     }
 
-    printf("\nCode | Magnitude | Number of Earthquakes (logarithmic scale) ");
+    printf("\nCode |  Magnitude  |  Number of Earthquakes (logarithmic scale)");
     printf("\n---------------------------------------------------------------------------");
     
     for(int i = 0; i < number; i++) {
         int count = magnitudes[i][0];
         char code[3];
         strcpy(code, codes[i]);
-        printHistogramLines(count, code, "    <= 6     ");
+        printHistogramLine(count, code, "    <= 6     ");
     }
     printf("\n---------------------------------------------------------------------------");
 
@@ -880,7 +880,7 @@ void cmdHistogram(PtList ptListEarthquake) {
         int count = magnitudes[i][1]; 
         char code[3];
         strcpy(code, codes[i]);
-        printHistogramLines(count, code, "  ]6.0, 6.5] ");
+        printHistogramLine(count, code, "  ]6.0, 6.5] ");
     }
     printf("\n---------------------------------------------------------------------------");
 
@@ -888,7 +888,7 @@ void cmdHistogram(PtList ptListEarthquake) {
         int count = magnitudes[i][2];
         char code[3];
         strcpy(code, codes[i]);
-        printHistogramLines(count, code, "  ]6.5, 7.0] ");
+        printHistogramLine(count, code, "  ]6.5, 7.0] ");
     }
     printf("\n---------------------------------------------------------------------------");
 
@@ -896,7 +896,7 @@ void cmdHistogram(PtList ptListEarthquake) {
         int count = magnitudes[i][3];
         char code[3];
         strcpy(code, codes[i]);
-        printHistogramLines(count, code, "  ]7.0, 7.5] ");
+        printHistogramLine(count, code, "  ]7.0, 7.5] ");
     }
     printf("\n---------------------------------------------------------------------------");
 
@@ -904,7 +904,7 @@ void cmdHistogram(PtList ptListEarthquake) {
         int count = magnitudes[i][4];
         char code[3];
         strcpy(code, codes[i]);
-        printHistogramLines(count, code, "  ]7.5, 8.0] ");
+        printHistogramLine(count, code, "  ]7.5, 8.0] ");
     }
     printf("\n---------------------------------------------------------------------------");
 
@@ -912,7 +912,7 @@ void cmdHistogram(PtList ptListEarthquake) {
         int count = magnitudes[i][5];
         char code[3];
         strcpy(code, codes[i]);
-        printHistogramLines(count, code, "     8 >     ");
+        printHistogramLine(count, code, "     8 >     ");
     }
 
 }
@@ -1296,11 +1296,11 @@ int *getMagnitudeCount(PtList ptListEarthquake, char code[3]) {
     return magnitudes;
 }
 
-void printHistogramLines(int count, char code[3], char string[13]) {
+void printHistogramLine(int count, char code[3], char string[13]) {
     int log = ceil(log2l(count));
     int length = strlen(string);
     int padding = length / 2;
-    printf("\n  %*s |%*s%*s|", 2, code, padding, string, length-padding, "");
-    for(int i = 0; i < log; i++) printf("#");
+    printf("\n  %*s |%*s%*s| ", 2, code, padding, string, 13-length, "");
+    for(int i = 0; i < (log+1)*3; i++) printf("#");
     printf(" %d", count);
 }

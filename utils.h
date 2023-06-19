@@ -228,10 +228,10 @@ float getDistance(float x0, float y0, float x1, float y1);
 int *getMagnitudeCount(PtList ptListEarthquake, char code[3]);
 
 /**
- * @brief Mostra as linhas usadas no histograma para observar o número de sismos
+ * @brief Mostra uma linha usada no histograma para observar o número de sismos
  * 
  * @param count 
  * @param code 
  * @param string 
  */
-void printHistogramLines(int count, char code[3], char string[13]);
+void printHistogramLine(int count, char code[3], char string[13]);
