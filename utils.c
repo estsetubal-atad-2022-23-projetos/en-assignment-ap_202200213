@@ -798,6 +798,125 @@ void cmdCount(PtList ptListEarthquake) {
     listDestroy(&ptFilteredList);
 }
 
+void cmdHistogram(PtList ptListEarthquake) {
+    if (ptListEarthquake == NULL) {
+		printf("Earthquake data not loaded!");
+        return;
+    }
+
+    int size;
+    listSize(ptListEarthquake, &size);
+
+    if(size == 0) {
+        printf("No earthquakes to display.");
+	    return;
+    }
+
+    int number = 0;
+    while(true) {
+        printf("\n\nEnter desired number of countries to show, must be greater or equal to 1 and less or equal to %d, or '-1' to return: ", size >= 3 ? 3 : size);
+        readInteger(&number);
+
+        if (number == -1) {
+            printf("\nReturning to main menu...");
+            return;
+        }
+
+        if(number >= 1 && number <= 3) break;
+
+        printf("Invalid number, must be greater or equal to 1 and less or equal to %d", size >= 3 ? 3 : size);
+    }
+
+    int magnitudes[6][3];
+    char codes[3][3];
+    int index = 0;
+    char command[16];
+    while (true && index < number) {
+        printf("\n\nEnter desired country code of country %d or 'back' to return: ", index+1);
+        readString(command, 16);
+
+        if (strcasecmp(command, "BACK") == 0 || strcasecmp(command, "QUIT") == 0) {
+            printf("\nReturning to main menu...");
+            return;
+        }
+
+        if (strlen(command) == 2) {
+            strcpy(codes[index], command);
+            int *magnitudesCount = getMagnitudeCount(ptListEarthquake, codes[index]);
+
+            bool dataFound = false;
+            for(int i = 0; i < 6; i++) {
+                magnitudes[index][i] = magnitudesCount[i];
+                if(magnitudes[i] > 0) dataFound = true;
+            }
+            free(magnitudesCount);
+            
+            if(!dataFound) {
+                printf("Earthquake data not available for country of code %s, select another one.", codes[index]);
+                continue;
+            }
+
+            printf("\nCountry %d selected with code: %s", index+1, command);
+            
+            index++;
+            continue;
+        }
+
+        printf("\nInvalid country code, must be 2 letters long");
+    }
+
+    printf("\nCode | Magnitude | Number of Earthquakes (logarithmic scale) ");
+    printf("\n---------------------------------------------------------------------------");
+    
+    for(int i = 0; i < number; i++) {
+        int count = magnitudes[i][0];
+        char code[3];
+        strcpy(code, codes[i]);
+        printHistogramLines(count, code, "    <= 6     ");
+    }
+    printf("\n---------------------------------------------------------------------------");
+
+    for(int i = 0; i < number; i++) {
+        int count = magnitudes[i][1]; 
+        char code[3];
+        strcpy(code, codes[i]);
+        printHistogramLines(count, code, "  ]6.0, 6.5] ");
+    }
+    printf("\n---------------------------------------------------------------------------");
+
+    for(int i = 0; i < number; i++) {
+        int count = magnitudes[i][2];
+        char code[3];
+        strcpy(code, codes[i]);
+        printHistogramLines(count, code, "  ]6.5, 7.0] ");
+    }
+    printf("\n---------------------------------------------------------------------------");
+
+    for(int i = 0; i < number; i++) {
+        int count = magnitudes[i][3];
+        char code[3];
+        strcpy(code, codes[i]);
+        printHistogramLines(count, code, "  ]7.0, 7.5] ");
+    }
+    printf("\n---------------------------------------------------------------------------");
+
+    for(int i = 0; i < number; i++) {
+        int count = magnitudes[i][4];
+        char code[3];
+        strcpy(code, codes[i]);
+        printHistogramLines(count, code, "  ]7.5, 8.0] ");
+    }
+    printf("\n---------------------------------------------------------------------------");
+
+    for(int i = 0; i < number; i++) {
+        int count = magnitudes[i][5];
+        char code[3];
+        strcpy(code, codes[i]);
+        printHistogramLines(count, code, "     8 >     ");
+    }
+
+}
+
 void cmdCountryS(PtMap ptMapCountryStatistics) {
     if (ptMapCountryStatistics == NULL) {
 		printf("Country statistics data not loaded!");
@@ -918,8 +1037,8 @@ void cmdRegionAvg(PtMap ptMapCountryStatistics) {
     mapSize(ptMapCountryStatistics, &size);
 
     if(size == 0) {
-         printf("No countries to display.");
-         return;
+        printf("No countries to display.");
+        return;
     }
 
     PtRegionInfo ptRegionInfo = (PtRegionInfo)malloc(11*sizeof(RegionInfo));
@@ -971,6 +1090,7 @@ void cmdRegionAvg(PtMap ptMapCountryStatistics) {
                 ptRegionInfo[i].totalPopulation += countryStatistics.population;
                 ptRegionInfo[i].totalLiteracy += countryStatistics.literacy * countryStatistics.population;
                 ptRegionInfo[i].totalGDP = countryStatistics.gdp_capita * countryStatistics.population;
+                break;
             }
         }
         if (!found) {
@@ -1108,7 +1228,7 @@ void cmdTopN(PtList ptListEarthquake, PtCountryLocation ptCountryLocation, int c
 
     int number = 0;
     while (true) {
-        printf("\n\nEnter desired number, must be greater than 1 and less or equal to %d or '-1' to return: ", countryLocationSize);
+        printf("\n\nEnter desired number, must be greater or equal to 1 and less or equal to %d or '-1' to return: ", countryLocationSize);
         readInteger(&number);
 
         if (number == 0 || number == -1) {
@@ -1119,7 +1239,7 @@ void cmdTopN(PtList ptListEarthquake, PtCountryLocation ptCountryLocation, int c
 
         if (number >= 1 && number <= countryLocationSize) break; 
 
-        printf("\nInvalid number, must be greater than 1 and less or equal to %d", countryLocationSize);
+        printf("\nInvalid number, must be greater or equal to 1 and less or equal to %d", countryLocationSize);
 
         number = 0;
     }
@@ -1144,4 +1264,43 @@ void cmdTopN(PtList ptListEarthquake, PtCountryLocation ptCountryLocation, int c
 
 float getDistance(float x0, float y0, float x1, float y1) {
     return sqrt(pow(x0-x1,2)+pow(y0-y1,2));
+}
+
+int *getMagnitudeCount(PtList ptListEarthquake, char code[3]) {
+    if (ptListEarthquake == NULL) {
+		printf("Earthquake data not loaded!");
+        return NULL;
+    }
+
+    int *magnitudes = (int*)malloc(6*sizeof(int));
+    if (magnitudes == NULL) return NULL;
+
+    for (int i = 0; i < 6; i++) magnitudes[i] = 0;
+
+    int size;
+    listSize(ptListEarthquake, &size);
+
+    for (int i = 0; i < size; i++) {
+        Earthquake earthquake;
+        listGet(ptListEarthquake, i, &earthquake);
+        if (strcasecmp(earthquake.countryCode,code) == 0) {
+            if (earthquake.magnitude <= 6) magnitudes[0]++;
+            else if (earthquake.magnitude <= 6.5) magnitudes[1]++;
+            else if (earthquake.magnitude <= 7) magnitudes[2]++;
+            else if (earthquake.magnitude <= 7.5) magnitudes[3]++;
+            else if (earthquake.magnitude <= 8) magnitudes[4]++;
+            else magnitudes[5]++;
+        }
+    }
+
+    return magnitudes;
+}
+
+void printHistogramLines(int count, char code[3], char string[13]) {
+    int log = ceil(log2l(count));
+    int length = strlen(string);
+    int padding = length / 2;
+    printf("\n  %*s |%*s%*s|", 2, code, padding, string, length-padding, "");
+    for(int i = 0; i < log; i++) printf("#");
+    printf(" %d", count);
 }

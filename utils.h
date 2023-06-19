@@ -177,6 +177,8 @@ void cmdListT(PtList ptListEarthquake);
  */
 void cmdCount(PtList ptListEarthquake);
 
+void cmdHistogram(PtList ptListEarthquake);
+
 /**
  * @brief Após perguntar os critérios de organização dos países ao utilizador, mostra todos os países ordenados pelas especificações
  * 
@@ -210,3 +212,14 @@ void cmdTopN(PtList ptListEarthquake, PtCountryLocation ptCountryLocation, int c
  * @return Distância entre dois pontos 
  */
 float getDistance(float x0, float y0, float x1, float y1);
+
+/**
+ *  
+ * @brief Obtém a contagem dos sismos para intervalos específicos de magnitudes para um dado país, alocando um ponteiro para devolver
+ * @param ptListEartquake
+ * @param code
+ * @return *magnitudes: pointer para a contagem de sismos por intervalo de magnitudes
+ */
+int *getMagnitudeCount(PtList ptListEarthquake, char code[3]);
+
+void printHistogramLines(int count, char code[3], char string[13]);
