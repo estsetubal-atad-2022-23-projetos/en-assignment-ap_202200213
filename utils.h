@@ -27,12 +27,13 @@
 #include "date.h"
 #include "time.h"
 
+/* Definição de códigos de erro */
 #define UTILS_OPERATION_OK 0
 #define UTILS_PARAMETER_INVALID 1
 #define UTILS_FILE_NOT_FOUND 2
 #define UTILS_NO_MEMORY 3
 /**
- * @brief Cria um struct para guardar as informações relativas á informação de cada região
+ * @brief Cria um struct para guardar informações extra relativas á informação de cada região
  * 
  */
 typedef struct regionInfo {
@@ -48,6 +49,10 @@ typedef struct regionInfo {
 /* Definição do ponteiro do struct anterior */
 typedef RegionInfo *PtRegionInfo;
 
+/**
+ * @brief Cria um struct para guardar informações extra relativas á informação de cada país
+ * 
+ */
 typedef struct countryInfo {
     char code[3];
     char territoryName[45];
@@ -56,6 +61,7 @@ typedef struct countryInfo {
     double totalMagnitude;
 } CountryInfo; 
 
+/* Definição do ponteiro do struct anterior */
 typedef CountryInfo *PtCountryInfo;
 
 /**
@@ -185,6 +191,13 @@ void cmdCountryS(PtMap ptMapCountryStatistics);
  */
 void cmdRegionAvg(PtMap ptMapCountryStatistics);
 
+/**
+ * @brief Após solicitar o número de registos a mostrar, mostra uma lista organizada decrescentemente de 'N' países com mais sismos
+ * 
+ * @param ptListEarthquake 
+ * @param ptCountryLocation 
+ * @param countryLocationSize 
+ */
 void cmdTopN(PtList ptListEarthquake, PtCountryLocation ptCountryLocation, int countryLocationSize);
 
 /**
