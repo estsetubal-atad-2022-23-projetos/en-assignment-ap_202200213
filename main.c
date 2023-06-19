@@ -15,6 +15,7 @@ void waitForKeypress();
  * @return int error code: EXIT_SUCCESS or EXIT_FAILURE
  */
 int main() {
+	/* Criação das variáveis utilizadas para armazenar a execução das funcionalidades de load */
 	int countryLocationMax = 244;
 	int countryLocationSize = 0;
 	PtCountryLocation ptCountryLocation = NULL;
@@ -22,11 +23,11 @@ int main() {
 	int countryStatisticsMax = 230;
 	PtMap ptMapCountryStatistics = NULL;
 
-	int earthquakeMax = 2340;//23409;
+	int earthquakeMax = 2340;//23409; //APAGAR: Altera 2340 para 23409
 	PtList ptListEarthquake = NULL;
 
 
-	/* Command interpreter. */
+	//Interpreta os comandos a serem executados
 	char command[100];	
 	while (true) {
 		
@@ -34,14 +35,16 @@ int main() {
 		readString(command, 100);
 
 		if (strcasecmp(command, "QUIT") == 0) {
-			// Break loop, effectively leaving the command line
+			//Quebra o loop saíndo da aplicação
 			break;	
 		}
+		//Nova funcionalidade loadAll(): executa as funções das três funcionalidades de load ao mesmo tempo
 		else if (strcasecmp(command, "LOADALL") == 0 || strcasecmp(command, "LOAD") == 0) {
 			cmdLoadCL(&ptCountryLocation, countryLocationMax, &countryLocationSize);
 			cmdLoadST(&ptMapCountryStatistics, countryStatisticsMax);
 			cmdLoadEA(&ptListEarthquake, earthquakeMax, ptCountryLocation, countryLocationSize);
 		}
+		//Utilização de todos os comandos criados: todas as funcionalidades têm o prefixo 'cmd' mas equivalem às funcionalidades do enunciado
 		else if (strcasecmp(command, "LOADCL") == 0) { cmdLoadCL(&ptCountryLocation, countryLocationMax, &countryLocationSize); }
 		else if (strcasecmp(command, "LOADST") == 0) { cmdLoadST(&ptMapCountryStatistics, countryStatisticsMax); }
 		else if (strcasecmp(command, "LOADEA") == 0) { cmdLoadEA(&ptListEarthquake, earthquakeMax, ptCountryLocation, countryLocationSize); }
@@ -61,7 +64,7 @@ int main() {
 		waitForKeypress();
 	}
 
-	//Cleanup
+	//Limpa a memória alocada e termina o programa
 	cmdClear(&ptListEarthquake, &ptMapCountryStatistics, &ptCountryLocation, &countryLocationSize);
 	printf("\n");
 	return EXIT_SUCCESS;

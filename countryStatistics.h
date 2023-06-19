@@ -1,7 +1,18 @@
+/**
+ * @file countryStatistics.h
+ * @author ap_202200213
+ * @brief Utilizado para declarar o struct CountryStatistics e respetivo ponteiro
+ * @version 0.1
+ * @date 2023-06-19
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #pragma once
 
 /**
- * @brief 
+ * @brief Cria um struct para guardar as informações sobre as estatísticas dos países
  * 
  */
 typedef struct countryStatistics {
@@ -16,4 +27,5 @@ float birthrate; // Número de nascimentos por 1000 pessoas por ano. Contém val
 float deathrate; // Número de mortes por 1000 pessoas por ano. Contém valores N.A.
 } CountryStatistics;
 
+/* Definição do ponteiro do struct anterior */
 typedef CountryStatistics* PtCountryStatistics;

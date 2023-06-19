@@ -1,7 +1,8 @@
 #pragma once
 #include "earthquake.h"
 
-typedef Earthquake ListElem; // Defining ListElem as Earthquake
+/* ListElem definido para Earthquake */
+typedef Earthquake ListElem;
 
-/* Function to print a listElem === KahootReport */
+/* Function to print a listElem  */
 void listElemPrint(ListElem elem);

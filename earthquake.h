@@ -1,9 +1,20 @@
+/**
+ * @file earthquake.h
+ * @author ap_202200213
+ * @brief Utilizado para declarar o struct Earthquake e respetivo ponteiro
+ * @version 0.1
+ * @date 2023-06-19
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #pragma once
 #include "date.h"
 #include "time.h"
 
 /**
- * @brief 
+ * @brief Cria um struct para guardar as informações sobre os sismos
  * 
  */
 
@@ -21,4 +32,5 @@ typedef struct earthquake {
     char magnitudeType[3]; // MB | MD | MH | ML | MS | MW
 } Earthquake;
 
+/* Definição do ponteiro do struct anterior */
 typedef Earthquake* PtEarthquake;

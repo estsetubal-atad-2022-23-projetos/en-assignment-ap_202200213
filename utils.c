@@ -1,3 +1,14 @@
+/**
+ * @file utils.c
+ * @author ap_202200213
+ * @brief Implementação das funcionalidades do ficheiro "utils.h"
+ * @version 0.1
+ * @date 2023-06-19
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #include "utils.h"
 
 int loadCL(PtCountryLocation *ptCountryLocationRef, int max, int *size) {

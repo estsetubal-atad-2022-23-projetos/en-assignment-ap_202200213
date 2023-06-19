@@ -21,10 +21,10 @@
 #include "stringWrap.h"
 #include "countryStatistics.h"
 
-/** Key type definition. Change according to the use-case. */
+/** Chave definida para StringWarp */
 typedef StringWrap MapKey;
 
-/** Value type definition. Change according to the use-case. */
+/** Valor definido para CountryStatistics */
 typedef CountryStatistics MapValue;
 
 /**
