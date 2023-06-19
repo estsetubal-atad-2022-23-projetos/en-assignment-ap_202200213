@@ -23,7 +23,7 @@ int main() {
 	int countryStatisticsMax = 230;
 	PtMap ptMapCountryStatistics = NULL;
 
-	int earthquakeMax = 2340;//23409; //APAGAR: Altera 2340 para 23409
+	int earthquakeMax = 23409;
 	PtList ptListEarthquake = NULL;
 
 
