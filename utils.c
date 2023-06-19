@@ -1043,6 +1043,105 @@ void cmdRegionAvg(PtMap ptMapCountryStatistics) {
     free(ptRegionInfo);
 }
 
+void cmdTopN(PtList ptListEarthquake, PtCountryLocation ptCountryLocation, int countryLocationSize) {
+    if (ptListEarthquake == NULL) {
+		printf("Earthquake data not loaded!");
+        return;
+    }
+
+    if (ptCountryLocation == NULL) {
+		printf("Country locations data not loaded!");
+        return;
+    }
+
+    if (countryLocationSize <= 0) {
+        printf("No country entries found!");
+        return;
+    }
+
+    PtCountryInfo ptCountryInfo = (PtCountryInfo)malloc(countryLocationSize * sizeof(CountryInfo));
+    if (ptCountryInfo == NULL) {
+        printf("Error: No memory available! How did we get here?");
+        return;
+    }
+
+    for (int i = 0; i < countryLocationSize; i++) {
+        strcpy(ptCountryInfo[i].code, ptCountryLocation[i].code);
+        strcpy(ptCountryInfo[i].territoryName, ptCountryLocation[i].territoryName);
+        ptCountryInfo[i].numberOfEarthquakes = 0;
+        ptCountryInfo[i].totalDepth = 0;
+        ptCountryInfo[i].totalMagnitude = 0;
+    }
+
+    int size;
+    listSize(ptListEarthquake, &size);
+    for(int i = 0; i < size; i++) {
+        Earthquake earthquake;
+        listGet(ptListEarthquake, i, &earthquake);
+        for(int k = 0; k < countryLocationSize; k++) {
+            if(strcasecmp(ptCountryInfo[k].code, earthquake.countryCode) == 0) {
+                ptCountryInfo[k].numberOfEarthquakes++;
+                ptCountryInfo[k].totalDepth += earthquake.depth;
+                ptCountryInfo[k].totalMagnitude += earthquake.magnitude;
+                break;
+            }
+        }
+    }
+
+    //Sort
+    for (int i = 0; i < countryLocationSize-1; i++) {
+        for (int k = 0; k < countryLocationSize-1; k++) { 
+            if (ptCountryInfo[k].numberOfEarthquakes < ptCountryInfo[k+1].numberOfEarthquakes) {
+                CountryInfo countryInfo = ptCountryInfo[k];
+                ptCountryInfo[k] = ptCountryInfo[k+1];
+                ptCountryInfo[k+1] = countryInfo;
+            }
+            else if (ptCountryInfo[k].numberOfEarthquakes == ptCountryInfo[k+1].numberOfEarthquakes) {
+                if(strcasecmp(ptCountryInfo[k].code, ptCountryInfo[k+1].code) > 0) {
+                    CountryInfo countryInfo = ptCountryInfo[k];
+                    ptCountryInfo[k] = ptCountryInfo[k+1];
+                    ptCountryInfo[k+1] = countryInfo;
+                }
+            }
+        }
+    }
+
+    int number = 0;
+    while (true) {
+        printf("\n\nEnter desired number, must be greater than 1 and less or equal to %d or '-1' to return: ", countryLocationSize);
+        readInteger(&number);
+
+        if (number == 0 || number == -1) {
+            printf("\nReturning to main menu...");
+            free(ptCountryInfo);
+            return;
+        }
+
+        if (number >= 1 && number <= countryLocationSize) break; 
+
+        printf("\nInvalid number, must be greater than 1 and less or equal to %d", countryLocationSize);
+
+        number = 0;
+    }
+
+    printf("\nCode Territory Name                                #quakes  Deph Avg Magnitude Avg");
+    for (int i = 0; i < countryLocationSize && i < number; i++) {
+        printf("\n%*s", 4, ptCountryInfo[i].code);
+        printf(" %*s", -45, ptCountryInfo[i].territoryName);
+        printf(" %*d", -8, ptCountryInfo[i].numberOfEarthquakes);
+        if (ptCountryInfo[i].numberOfEarthquakes == 0) { 
+            printf(" %*s", -8, "------"); 
+            printf(" %*s", -8, "------"); 
+        } 
+        else {
+            printf(" %*.2lf", -8, ptCountryInfo[i].totalDepth / ptCountryInfo[i].numberOfEarthquakes);
+            printf(" %*.2lf", -8, ptCountryInfo[i].totalMagnitude / ptCountryInfo[i].numberOfEarthquakes);
+        }
+    }
+    
+    free(ptCountryInfo);
+}
+
 float getDistance(float x0, float y0, float x1, float y1) {
     return sqrt(pow(x0-x1,2)+pow(y0-y1,2));
 }

@@ -57,6 +57,7 @@ int main() {
 		else if (strcasecmp(command, "COUNT") == 0) { cmdCount(ptListEarthquake); }
 		else if (strcasecmp(command, "COUNTRY_S") == 0) { cmdCountryS(ptMapCountryStatistics); }
 		else if (strcasecmp(command, "REGION_AVG") == 0) { cmdRegionAvg(ptMapCountryStatistics); }
+		else if (strcasecmp(command, "TOPN") == 0) { cmdTopN(ptListEarthquake, ptCountryLocation, countryLocationSize); }
 		else {
 			printf("Command not found.");
 		}

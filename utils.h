@@ -48,6 +48,16 @@ typedef struct regionInfo {
 /* Definição do ponteiro do struct anterior */
 typedef RegionInfo *PtRegionInfo;
 
+typedef struct countryInfo {
+    char code[3];
+    char territoryName[45];
+    int numberOfEarthquakes;
+    double totalDepth;
+    double totalMagnitude;
+} CountryInfo; 
+
+typedef CountryInfo *PtCountryInfo;
+
 /**
  * @brief Carrega em memória as localizações dos países do ficheiro world_country_locations.csv
  * 
@@ -174,6 +184,8 @@ void cmdCountryS(PtMap ptMapCountryStatistics);
  * @param ptMapCountryStatistics 
  */
 void cmdRegionAvg(PtMap ptMapCountryStatistics);
+
+void cmdTopN(PtList ptListEarthquake, PtCountryLocation ptCountryLocation, int countryLocationSize);
 
 /**
  * @brief Calcula a distância entre dois pontos utilizando o Teorema de Pitágoras
